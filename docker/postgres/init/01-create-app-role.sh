@@ -1,0 +1,24 @@
+
+#!/bin/bash
+set -e
+
+psql -v ON_ERROR_STOP=1 \
+  --username "$POSTGRES_USER" \
+  --dbname "$POSTGRES_DB" \
+  --set=app_password="$APP_DB_PASSWORD" <<'EOSQL'
+
+CREATE ROLE dealeros_app
+WITH LOGIN PASSWORD :'app_password'
+NOSUPERUSER NOCREATEDB NOCREATEROLE NOBYPASSRLS;
+
+GRANT CONNECT ON DATABASE dealeros TO dealeros_app;
+
+GRANT USAGE ON SCHEMA public TO dealeros_app;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO dealeros_app;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public
+GRANT USAGE, SELECT ON SEQUENCES TO dealeros_app;
+
+EOSQL

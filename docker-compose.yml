@@ -1,0 +1,51 @@
+
+services:
+  db:
+    image: postgres:16
+    container_name: dealeros-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: dealeros
+      APP_DB_PASSWORD: ${APP_DB_PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - dealeros_postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init/01-create-app-role.sh:/docker-entrypoint-initdb.d/01-create-app-role.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d dealeros"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+    container_name: dealeros-backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    environment:
+      ADMIN_DATABASE_URL: postgresql+psycopg://postgres:${POSTGRES_PASSWORD}@db:5432/dealeros
+      APP_DATABASE_URL: postgresql+psycopg://dealeros_app:${APP_DB_PASSWORD}@db:5432/dealeros
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: dealeros-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  dealeros_postgres_data:
