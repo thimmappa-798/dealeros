@@ -76,73 +76,34 @@ The application supports multiple organizations using a shared database while en
 
 ## Project Structure
 
-
-
-```text
-
 dealeros/
-
-â”‚
-
-â”œâ”€â”€ backend/
-
-â”‚   â”œâ”€â”€ app/
-
-â”‚   â”‚   â”œâ”€â”€ data/
-
-â”‚   â”‚   â”œâ”€â”€ models/
-
-â”‚   â”‚   â”œâ”€â”€ routers/
-
-â”‚   â”‚   â”œâ”€â”€ schemas/
-
-â”‚   â”‚   â”œâ”€â”€ service/
-
-â”‚   â”‚   â”œâ”€â”€ database.py
-
-â”‚   â”‚   â”œâ”€â”€ dependencies.py
-
-â”‚   â”‚   â””â”€â”€ main.py
-
-â”‚   â”‚
-
-â”‚   â”œâ”€â”€ migrations/
-
-â”‚   â”œâ”€â”€ tests/
-
-â”‚   â”œâ”€â”€ requirements.txt
-
-â”‚   â”œâ”€â”€ import\_source\_records.py
-
-â”‚   â”œâ”€â”€ seed\_organizations\_locations.py
-
-â”‚   â”œâ”€â”€ seed\_demo\_users.py
-
-â”‚   â”œâ”€â”€ run\_reconciliation.py
-
-â”‚   â””â”€â”€ .env
-
-â”‚
-
-â”œâ”€â”€ frontend/
-
-â”‚   â”œâ”€â”€ src/
-
-â”‚   â”œâ”€â”€ public/
-
-â”‚   â”œâ”€â”€ package.json
-
-â”‚   â””â”€â”€ README.md
-
-â”‚
-
-â”œâ”€â”€ .gitignore
-
-â”œâ”€â”€ README.md
-
-â””â”€â”€ DECISIONS.md
-
-```
+├── backend/
+│   ├── app/
+│   │   ├── data/
+│   │   ├── models/
+│   │   ├── routers/
+│   │   ├── schemas/
+│   │   ├── service/
+│   │   ├── database.py
+│   │   ├── dependencies.py
+│   │   └── main.py
+│   ├── migrations/
+│   ├── tests/
+│   ├── requirements.txt
+│   ├── import_source_records.py
+│   ├── seed_organizations_locations.py
+│   ├── seed_demo_users.py
+│   └── run_reconciliation.py
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── README.md
+├── docker/
+├── docker-compose.yml
+├── .gitignore
+├── README.md
+└── DECISIONS.md
 
 
 
